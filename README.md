@@ -9,7 +9,7 @@ This is a simple Kubernetes controller written in Ruby that sends email and/or S
 
 ```bash
 helm install ./helm \
-  --name velero-backup-notification \
+  --generate-name \
   --namespace velero \
   --set velero_namespace=velero \
   --set slack.enabled=true \
@@ -23,7 +23,23 @@ helm install ./helm \
   --set email.smtp.password=... \
   --set email.from_address=... \
   --set email.to_address=... \
-  --set email.subject_prefix="[Velero]"
+  --set email.from_sender_name="Company X" \
+  --set email.subject_prefix="[development]"
 ```
 
 That's it! You should now receive notifications when a backup/restore is started and when it's completed.
+
+## Building Docker
+
+```
+cd velero-backup-notification
+
+docker login --username=laimison
+docker build -t velero-backup-notification .
+docker images | head
+docker tag mytag laimison/velero-backup-notification:latest
+docker push laimison/velero-backup-notification:latest
+
+docker tag mytag laimison/velero-backup-notification:0.1
+docker push laimison/velero-backup-notification:0.1
+```

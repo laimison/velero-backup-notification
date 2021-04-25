@@ -50,7 +50,8 @@ class Controller
 
     return if phase.empty? || phase == "Deleting"
 
-    msg = "#{event.resource.kind} #{event.resource.metadata.name} #{phase}"
+    # msg = "#{event.resource.kind} #{phase} #{event.resource.metadata.name}"
+    msg = "#{event.resource.kind} #{phase}"
 
     logger.info msg
 
@@ -77,7 +78,7 @@ class Controller
     if ENV.fetch("ENABLE_EMAIL_NOTIFICATIONS", "false") =~ /true/i
       begin
         mail = Mail.new do
-          from    ENV["EMAIL_FROM_ADDRESS"]
+          from    "#{ENV['EMAIL_FROM_SENDER_NAME']} <#{ENV["EMAIL_FROM_ADDRESS"]}>"
           to      ENV["EMAIL_TO_ADDRESS"]
           subject "#{ENV.fetch("EMAIL_SUBJECT_PREFIX", "[Velero]")} #{msg}"
           body    "Run `velero #{event.resource.kind.downcase} describe #{event.resource.metadata.name} --details` for more information."
@@ -107,5 +108,3 @@ class Controller
     end
   end
 end
-
-

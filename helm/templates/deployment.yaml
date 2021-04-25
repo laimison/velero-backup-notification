@@ -38,6 +38,8 @@ spec:
               value: {{ .Values.email.enabled | quote }}
             - name: EMAIL_FROM_ADDRESS
               value: {{ .Values.email.from_address | quote }}
+            - name: EMAIL_FROM_SENDER_NAME
+              value: {{ .Values.email.from_sender_name | quote }}
             - name: EMAIL_TO_ADDRESS
               value: {{ .Values.email.to_address | quote }}
             - name: EMAIL_SUBJECT_PREFIX
