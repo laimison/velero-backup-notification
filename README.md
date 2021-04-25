@@ -29,6 +29,16 @@ helm install ./helm \
 
 That's it! You should now receive notifications when a backup/restore is started and when it's completed.
 
+## Uninstall
+
+Delete these resources
+
+```
+kubectl get deploy -n velero | grep velero-backup-notification
+kubectl get secret -n velero | grep velero-backup-notification
+
+```
+
 ## Building Docker
 
 ```
